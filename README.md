@@ -14,16 +14,6 @@ and total" runs through Nutrient, even when the file is attached to the chat.
 
 On Team and Enterprise plans, an Owner can roll the plugin out to the whole organization.
 
-## Why a plugin
-
-claude.ai doesn't pass a connector's server instructions to the model, and by default it loads only the connector's tool
-names until Claude searches for a tool. With the connector alone, Claude usually reads an attached document itself. The
-skill's description stays in Claude's context and routes parse, OCR, Markdown, extraction and classification requests
-to Nutrient. In a small claude.ai test of six requests with an invoice attached, the plugin got 5 to call the connector,
-against 1 with the connector alone.
-
-Other MCP clients, such as ChatGPT, Cursor or VS Code, connect to `https://mcp.nutrient.io/mcp` directly.
-
 ## Contents
 
 - [`plugins/nutrient`](plugins/nutrient): the plugin, with its [README](plugins/nutrient/README.md), which says what it
