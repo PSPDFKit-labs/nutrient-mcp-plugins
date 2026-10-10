@@ -1,0 +1,20 @@
+{
+  "name": "nutrient",
+  "interface": {
+    "displayName": "Nutrient"
+  },
+  "plugins": [
+    {
+      "name": "nutrient",
+      "source": {
+        "source": "local",
+        "path": "./plugins/nutrient"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

@@ -23,16 +23,20 @@ you will start.
 
 ## Give Nutrient the file
 
-1. For a file attached to the chat or on disk, call `upload_documents` with its `filename`, `content_type` and `path`,
-   run the command it returns exactly as returned, and pass the printed `asset_id` to the processing tool. The command
-   expires within five minutes; if it has, call `upload_documents` again. Reuse an `asset_id` for further operations on
-   the same file; it expires after 24 hours.
-2. If the command can't run where the file is, or fails with HTTP 403 "Host not in allowlist", don't retry it. When the
+1. If the processing tool takes `chat_file` and the user attached the file to the chat, pass it there: the app fills in
+   its `download_url`, and Nutrient fetches the file from it. Never type those values yourself. If the app didn't fill
+   it in, continue with the next step.
+2. Otherwise, for a file attached to the chat or on disk, call `upload_documents` with its `filename`, `content_type` and
+   `path`, run the command it returns exactly as returned, and pass the printed `asset_id` to the processing tool. The
+   command expires within five minutes; if it has, call `upload_documents` again. Reuse an `asset_id` for further
+   operations on the same file; it expires after 24 hours.
+3. If that command can't run where the file is, or fails with HTTP 403 "Host not in allowlist", don't retry it. When the
    processing tool offers `attached_file`, call it once per file with the file's `filename` and `content_type` instead of
-   `asset_id`: the Nutrient panel asks the user for the file and runs the call. Tell the user to add the file in the panel,
-   and don't call again. Otherwise tell the user to allow `mcp.nutrient.io` in Claude's network settings (Settings,
-   Capabilities, Additional allowed domains), or to share the document as an HTTPS link, which `document.url` takes.
-3. Never paste a document as base64 to get around an upload problem.
+   `asset_id`: the Nutrient panel asks the user for the file and runs the call. Tell the user to add the file in the
+   panel, and don't call again. Otherwise ask the user to allow `mcp.nutrient.io` in the app's network settings (in
+   Claude: Settings, Capabilities, Additional allowed domains), or to share the document as an HTTPS link, which
+   `document.url` takes.
+4. Never paste a document as base64 to get around an upload problem.
 
 ## Read the results
 

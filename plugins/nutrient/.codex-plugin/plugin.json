@@ -1,0 +1,31 @@
+{
+  "name": "nutrient",
+  "version": "1.0.0",
+  "description": "Parse, extract from and classify documents with Nutrient DWS: OCR for scans, Markdown with layout, structured fields with citations, and labels, as stored runs in your Nutrient account.",
+  "author": { "name": "Nutrient", "url": "https://www.nutrient.io" },
+  "homepage": "https://www.nutrient.io/api/",
+  "repository": "https://github.com/PSPDFKit-labs/nutrient-mcp-plugins",
+  "license": "MIT",
+  "keywords": ["documents", "pdf", "ocr", "data extraction", "markdown", "classification"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Nutrient",
+    "shortDescription": "Parse and extract documents",
+    "longDescription": "Turn PDFs, Office documents and images into Markdown with layout, extract structured fields with a citation for each value, and classify documents with Nutrient DWS. Each run is stored in your Nutrient account.",
+    "developerName": "Nutrient",
+    "category": "Productivity",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "websiteURL": "https://www.nutrient.io/api/",
+    "privacyPolicyURL": "https://www.nutrient.io/legal/privacy/",
+    "termsOfServiceURL": "https://www.nutrient.io/legal/terms/",
+    "supportURL": "https://www.nutrient.io/support/request/",
+    "defaultPrompt": [
+      "Parse the attached PDF into Markdown with Nutrient",
+      "Extract the invoice number, seller and total from this invoice with Nutrient"
+    ],
+    "brandColor": "#1A1414",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
+  }
+}
