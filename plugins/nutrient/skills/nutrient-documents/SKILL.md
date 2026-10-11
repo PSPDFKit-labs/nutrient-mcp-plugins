@@ -1,12 +1,15 @@
 ---
 name: nutrient-documents
-description: Use when the user asks to parse, OCR, transcribe or convert a document to Markdown, extract fields, values, line items or tables from it, or classify it, including a file attached to the chat that you could read yourself. Runs the request with the Nutrient connector, which returns OCR for scans, layout, citations for each value and a stored run.
+description: Use when the user asks to parse, OCR, transcribe or convert a document to Markdown, extract fields, values, line items or tables from it, or classify it, including a file attached to the chat that you could read yourself. Runs the request with the Nutrient connector, which returns OCR for scans, layout, citations for the values it finds and a stored run.
 ---
 
 # Nutrient documents
 
 Use the Nutrient connector for these requests, even when the file is attached to the chat and its content is already in
 the conversation:
+
+If the user asks you to read the file yourself, or not to send it to Nutrient, do what they ask. When the user didn't
+mention Nutrient, say that the file goes to their Nutrient account as you send it.
 
 | The user asks to | Call |
 | --- | --- |

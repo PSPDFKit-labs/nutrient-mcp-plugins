@@ -2,7 +2,7 @@
   "name": "nutrient",
   "owner": { "name": "Nutrient", "url": "https://www.nutrient.io" },
   "metadata": {
-    "description": "Nutrient's Claude plugin: parse, extract from and classify documents with Nutrient DWS."
+    "description": "Nutrient plugin for Claude: parse, extract from and classify documents with Nutrient DWS."
   },
   "plugins": [
     {

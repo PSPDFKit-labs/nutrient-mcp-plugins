@@ -13,7 +13,7 @@ file is attached to the chat.
 2. Attach a PDF, Office document or image, point to a file on disk or an HTTPS link, and ask to parse it, convert it to
    Markdown, extract fields or tables, or classify it.
 3. The assistant sends the file to your Nutrient account and returns the result: Markdown with layout, structured fields
-   with a citation for each value, or labels with scores. Where the Nutrient panel appears, you can review each value
+   with citations for the values it finds, or labels with scores. Where the Nutrient panel appears, you can review each value
    beside its source on the page.
 
 In ChatGPT, Nutrient fetches a file attached to the chat from the link ChatGPT provides. In Claude, for Claude to upload
@@ -23,7 +23,26 @@ Owner on Team and Enterprise plans); otherwise Claude asks you to drop the file 
 ## Data
 
 The plugin sends the documents you ask the assistant to process, and the instructions for each run, to your Nutrient
-DWS account through `mcp.nutrient.io`. Uploaded files are kept for 24 hours; DWS stores each run under Nutrient's
-storage policy, and each run uses your DWS credits. The service also records a short generic purpose that the assistant
+DWS account through `mcp.nutrient.io`; it sends nothing anywhere else. To send a file from your computer, or one attached
+to the chat, the assistant runs a one-time curl command that the connector returns: it uploads only the files you named
+to `mcp.nutrient.io` and expires within five minutes. Uploaded files are kept for 24 hours. DWS keeps each run for your
+plan's retention period, and each run uses your DWS credits. Opening a document in the Nutrient panel's full-screen
+review stores a copy in DWS Viewer, which stays until you delete it and counts toward your plan's document limit. The service also records a short generic purpose that the assistant
 writes for each call, with no document content, for usage analytics. Summaries and questions about a document stay with
 the assistant's own reading unless you ask for one of these operations.
+
+Privacy policy: https://www.nutrient.io/legal/privacy/
+
+## Troubleshooting
+
+- **HTTP 403 "Host not in allowlist" when uploading:** allow `mcp.nutrient.io` in the app's network settings (in Claude:
+  Settings, Capabilities, Additional allowed domains), or drop the file in the Nutrient panel when it asks for it.
+- **The connector asks you to connect or reconnect:** sign in again from the plugin's or the connector's settings.
+- **`permission_denied`:** your Nutrient account doesn't include the product the request needs, such as Data Extraction
+  or Processor. Check your plan in the DWS dashboard.
+- **Not enough credits:** a run stops before processing when your DWS credits run out; add credits in the DWS dashboard.
+
+## Support
+
+- Help with the plugin or your Nutrient account: https://www.nutrient.io/company/contact/ or https://www.nutrient.io/support/request/
+- Report a security vulnerability: https://www.nutrient.io/security/report-vulnerability/

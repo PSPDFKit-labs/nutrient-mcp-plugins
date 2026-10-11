@@ -2,24 +2,38 @@
   "name": "nutrient",
   "version": "1.0.0",
   "description": "Parse, extract from and classify documents with Nutrient DWS: OCR for scans, Markdown with layout, structured fields with citations, and labels, as stored runs in your Nutrient account.",
-  "author": { "name": "Nutrient", "url": "https://www.nutrient.io" },
+  "author": {
+    "name": "Nutrient",
+    "url": "https://www.nutrient.io"
+  },
   "homepage": "https://www.nutrient.io/api/",
   "repository": "https://github.com/PSPDFKit-labs/nutrient-mcp-plugins",
   "license": "MIT",
-  "keywords": ["documents", "pdf", "ocr", "data extraction", "markdown", "classification"],
+  "keywords": [
+    "documents",
+    "pdf",
+    "ocr",
+    "data extraction",
+    "markdown",
+    "classification"
+  ],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Nutrient",
     "shortDescription": "Parse and extract documents",
-    "longDescription": "Turn PDFs, Office documents and images into Markdown with layout, extract structured fields with a citation for each value, and classify documents with Nutrient DWS. Each run is stored in your Nutrient account.",
+    "longDescription": "For people and teams who work with documents in ChatGPT or Codex: turn PDFs, Office documents and images into Markdown with layout, extract structured fields with citations for the values it finds, and classify documents with Nutrient DWS. Requires a Nutrient DWS account with credits: each run uses credits and is stored in your account. In ChatGPT, Nutrient takes files attached to the chat or HTTPS links; signing, redaction and other Processor operations need files on your computer, as in Codex. Uploaded files are kept for 24 hours.",
     "developerName": "Nutrient",
     "category": "Productivity",
-    "capabilities": ["Interactive", "Read", "Write"],
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
     "websiteURL": "https://www.nutrient.io/api/",
     "privacyPolicyURL": "https://www.nutrient.io/legal/privacy/",
     "termsOfServiceURL": "https://www.nutrient.io/legal/terms/",
-    "supportURL": "https://www.nutrient.io/support/request/",
+    "supportURL": "https://www.nutrient.io/company/contact/",
     "defaultPrompt": [
       "Parse the attached PDF into Markdown with Nutrient",
       "Extract the invoice number, seller and total from this invoice with Nutrient"

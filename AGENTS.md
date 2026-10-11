@@ -1,4 +1,4 @@
-# Nutrient Claude plugin: agent guidance
+# Nutrient MCP plugins: agent guidance
 
 This repository publishes one plugin, `plugins/nutrient`, to Claude and to OpenAI (ChatGPT and Codex). Claude reads
 `.claude-plugin/plugin.json`, OpenAI reads `.codex-plugin/plugin.json`, and both share `.mcp.json`, `skills/` and the
@@ -35,8 +35,15 @@ The snapshot should match the service that is live in production, since the plug
 
 ## Submitting to OpenAI
 
-Zip the contents of `plugins/nutrient` and upload them in OpenAI's developer dashboard; an organization owner or a member
-with Apps Management Write submits, after the organization is verified. Review also asks for reviewer credentials, five
-positive and three negative test cases, a video walkthrough and release notes, entered in the dashboard, not in the ZIP.
-OpenAI also verifies the domain: the dashboard issues a challenge token that must be served as plain text at
+Build the ZIP from the plugin folder without Claude's manifest, so OpenAI reads only `.codex-plugin/plugin.json`:
+
+```sh
+cd plugins/nutrient && zip -r -X ../../nutrient-openai.zip . -x '.claude-plugin/*' -x '.DS_Store'
+```
+
+Upload it in OpenAI's developer dashboard from a project with global data residency; an organization owner or a member
+with Apps Management Write submits, after the organization's identity is verified. Review needs five positive and three
+negative test cases, a demo video and release notes: they can go in the dashboard or in `.codex-plugin/plugin.json`
+under `extensions.com.openai.review` and `publication`. Reviewer credentials go only in the dashboard; the ZIP rejects
+them. OpenAI also verifies the domain: the dashboard issues a challenge token that must be served as plain text at
 `https://mcp.nutrient.io/.well-known/openai-apps-challenge` (or on an eligible parent domain) before review.
