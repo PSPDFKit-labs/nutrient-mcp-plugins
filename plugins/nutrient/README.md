@@ -27,9 +27,9 @@ DWS account through `mcp.nutrient.io`; it sends nothing anywhere else. To send a
 to the chat, the assistant runs a one-time curl command that the connector returns: it uploads only the files you named
 to `mcp.nutrient.io` and expires within five minutes. Uploaded files are kept for 24 hours. DWS keeps each run for your
 plan's retention period, and each run uses your DWS credits. Opening a document in the Nutrient panel's full-screen
-review stores a copy in DWS Viewer, which stays until you delete it and counts toward your plan's document limit. The service also records a short generic purpose that the assistant
-writes for each call, with no document content, for usage analytics. Summaries and questions about a document stay with
-the assistant's own reading unless you ask for one of these operations.
+review stores a copy in DWS Viewer, which stays until you delete it and counts toward your plan's document limit.
+Summaries and questions about a document stay with the assistant's own reading unless you ask for one of these
+operations.
 
 Privacy policy: https://www.nutrient.io/legal/privacy/
 
