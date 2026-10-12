@@ -128,7 +128,8 @@ for skill_file in skills:
     front = re.match(r"^---\nname: ([a-z0-9-]{1,64})\ndescription: ([^\n]{1,1024})\n---\n", skill)
     check(front is not None and front.group(1) == folder,
           f"{folder}: frontmatter names the skill after its folder and has a one-line description of at most 1024 characters")
-    named = sorted({span for span in re.findall(r"`([a-z_]+(?:\.[a-z_]+)*)`", skill)} - NOT_IDENTIFIERS)
+    # Digits and capitals too, so a misspelt content_base64 or schemaValid fails.
+    named = sorted({span for span in re.findall(r"`([A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z0-9_]+)*)`", skill)} - NOT_IDENTIFIERS)
     unknown = [name for name in named if not all(part in known for part in name.split(".")) and name not in ERROR_CODES]
     check(not unknown, f"{folder}: names only tools, fields and error codes the service lists; unknown: {', '.join(unknown)}")
 

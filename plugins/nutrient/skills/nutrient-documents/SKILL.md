@@ -20,9 +20,9 @@ mention Nutrient, say that the file goes to their Nutrient account as you send i
 For a file as the result, such as a searchable PDF, a conversion, a redaction or a signature, use `process_document`,
 `redact_document` or `sign_document`.
 
-Each run uses the user's Nutrient DWS credits. For a summary of a document or a question about it, read it yourself
-unless the user asks for one of the operations above. Before running more than three files, tell the user how many runs
-you will start.
+Each run uses the user's Nutrient DWS credits. For a summary of a document or a free-form question about it, read it
+yourself unless the user asks for one of the operations above; parse a scan or image you can't read. Before running more
+than three files, tell the user how many runs you will start.
 
 ## Give Nutrient the file
 
