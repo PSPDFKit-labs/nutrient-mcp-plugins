@@ -7,8 +7,8 @@ Run from the repository root: python3 ci/check.py
 - The bundled connector is the production Hosted MCP service over HTTP.
 - The skill's frontmatter follows the Agent Skills format.
 - Every identifier the skill puts in a code span is a tool, an input or output field, or an error code the service
-  returns, according to ci/tools.json: the catalog Hosted MCP lists to a client that renders MCP Apps. Refresh it from
-  the monorepo when the service changes (see AGENTS.md).
+  returns, according to ci/tools.json and ci/tools-chatgpt.json: the catalogs Hosted MCP lists to Claude (a client that
+  renders MCP Apps) and to ChatGPT. Refresh them from the monorepo when the service changes (see AGENTS.md).
 """
 import json
 import pathlib
@@ -120,8 +120,11 @@ check(list(servers) == ["nutrient"] and servers["nutrient"].get("type") == "http
 skills = sorted((PLUGIN / "skills").glob("*/SKILL.md"))
 check(len(skills) > 0, "the plugin has at least one skill")
 tools = load(ROOT / "ci" / "tools.json")
-known = {tool["name"] for tool in tools}
-collect(tools, known)
+# ChatGPT is listed chat_file instead of the panel's file inputs; the shared skill may name either.
+chatgpt_catalog = ROOT / "ci" / "tools-chatgpt.json"
+chatgpt_tools = load(chatgpt_catalog) if chatgpt_catalog.exists() else []
+known = {tool["name"] for tool in tools + chatgpt_tools}
+collect(tools + chatgpt_tools, known)
 for skill_file in skills:
     skill = skill_file.read_text().replace("\r\n", "\n")
     folder = skill_file.parent.name

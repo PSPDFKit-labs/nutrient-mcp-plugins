@@ -24,11 +24,13 @@ Never change `name` in `plugin.json`: it is the plugin's permanent identity.
 
 ## Refreshing the tool snapshot
 
-`ci/tools.json` is the catalog Hosted MCP (`hosted-mcp/` in the private Nutrient monorepo) lists to a client that renders
-MCP Apps. When the service changes its tools, inputs or result fields, regenerate it from the monorepo's `hosted-mcp/`:
+`ci/tools.json` and `ci/tools-chatgpt.json` are the catalogs Hosted MCP (`hosted-mcp/` in the private Nutrient monorepo)
+lists to a client that renders MCP Apps (Claude) and to ChatGPT. When the service changes its tools, inputs or result fields, regenerate it from the monorepo's `hosted-mcp/`:
 
 ```sh
-MCP_TEST_APPS_CATALOG_PATH=/path/to/nutrient-mcp-plugins/ci/tools.json dotnet run --project tests/Nutrient.Mcp.Tests --no-build --no-restore
+MCP_TEST_APPS_CATALOG_PATH=/path/to/nutrient-mcp-plugins/ci/tools.json \
+MCP_TEST_CHATGPT_CATALOG_PATH=/path/to/nutrient-mcp-plugins/ci/tools-chatgpt.json \
+  dotnet run --project tests/Nutrient.Mcp.Tests --no-build --no-restore
 ```
 
 The snapshot should match the service that is live in production, since the plugin connects to production.
