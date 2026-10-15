@@ -28,9 +28,6 @@ to the chat, the assistant runs a one-time curl command that the connector retur
 to `mcp.nutrient.io` and expires within five minutes. Uploaded files are kept for 24 hours. DWS keeps each run for your
 plan's retention period, and each run uses your DWS credits. Opening a document in the Nutrient panel's full-screen
 review stores a copy in DWS Viewer, which stays until you delete it and counts toward your plan's document limit.
-The panel's document viewer also reports usage metrics to Nutrient: which viewer features are used, the viewer's
-product and license details, a random identifier it keeps in the browser, and the document's DWS Viewer ID, or a hash
-of the file's first 16 KB when it shows a local copy. The metrics include no document content.
 Summaries and questions about a document stay with the assistant's own reading unless you ask for one of these
 operations.
 
@@ -44,6 +41,9 @@ Privacy policy: https://www.nutrient.io/legal/privacy/
 - **`permission_denied`:** your Nutrient account doesn't include the product the request needs, such as Data Extraction
   or Processor. Check your plan in the DWS dashboard.
 - **Not enough credits:** a run stops before processing when your DWS credits run out; add credits in the DWS dashboard.
+- **Review says DWS Viewer isn't set up for your organization:** your Nutrient organization hasn't chosen where DWS
+  Viewer stores documents yet. Someone in the organization can choose a region once in the DWS dashboard, under Viewer
+  API, Documents; it can't be changed later. The panel's Open DWS dashboard button goes there.
 
 ## Support
 
