@@ -23,11 +23,14 @@ Owner on Team and Enterprise plans); otherwise Claude asks you to drop the file 
 ## Data
 
 The plugin sends the documents you ask the assistant to process, and the instructions for each run, to your Nutrient
-DWS account through `mcp.nutrient.io`; it sends nothing anywhere else. To send a file from your computer, or one attached
+DWS account through `mcp.nutrient.io`; it sends them nowhere else. To send a file from your computer, or one attached
 to the chat, the assistant runs a one-time curl command that the connector returns: it uploads only the files you named
 to `mcp.nutrient.io` and expires within five minutes. Uploaded files are kept for 24 hours. DWS keeps each run for your
 plan's retention period, and each run uses your DWS credits. Opening a document in the Nutrient panel's full-screen
 review stores a copy in DWS Viewer, which stays until you delete it and counts toward your plan's document limit.
+The panel's document viewer also reports usage metrics to Nutrient: which viewer features are used, the viewer's
+product and license details, a random identifier it keeps in the browser, and the document's DWS Viewer ID, or a hash
+of the file's first 16 KB when it shows a local copy. The metrics include no document content.
 Summaries and questions about a document stay with the assistant's own reading unless you ask for one of these
 operations.
 
