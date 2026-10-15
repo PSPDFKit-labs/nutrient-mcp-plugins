@@ -57,7 +57,7 @@
               "description": "Convert an attached PDF to Markdown",
               "prompt": "Convert the attached menu to Markdown with Nutrient.",
               "tools_triggered": "parse_document",
-              "expected_behavior": "Nutrient parses the attached PDF and returns its text as Markdown, keeping the menu's sections, dishes and prices in reading order. The Nutrient panel shows the result.",
+              "expected_behavior": "Nutrient parses the attached five-page PDF, and the answer gives the menu as Markdown with its sections, dishes and prices. The Nutrient panel shows the result.",
               "file_attachment_urls": [
                 "https://raw.githubusercontent.com/PSPDFKit/pspdfkit-maui-catalog/main/Resources/Raw/Assets/menu.pdf"
               ]
@@ -69,10 +69,10 @@
               "expected_behavior": "Nutrient labels the document a contract with a confidence score, and the answer names that label."
             },
             {
-              "description": "Draft an extraction schema without processing a document",
-              "prompt": "With Nutrient, draft an extraction schema for purchase orders: order number, order date, supplier, and line items with quantity and unit price. Don't run it on a document yet.",
+              "description": "Generate an extraction schema from a sample invoice without extracting",
+              "prompt": "Use Nutrient to generate an extraction schema for invoices like https://raw.githubusercontent.com/PSPDFKit/pspdfkit-maui-catalog/main/Resources/Raw/Assets/invoice.pdf with the invoice number, date, seller, and line items with quantity and unit price. Don't extract the values yet.",
               "tools_triggered": "generate_schema",
-              "expected_behavior": "Nutrient returns a JSON schema with the requested fields and an array of line items. No document is processed."
+              "expected_behavior": "Nutrient generates a JSON schema from the sample invoice with the requested fields and an array of line items. No values are extracted and no run is stored."
             },
             {
               "description": "Check remaining credits",
@@ -91,8 +91,8 @@
               "prompt": "Delete every document stored in my Nutrient account."
             },
             {
-              "description": "Signing a document, which Nutrient doesn't offer in ChatGPT",
-              "prompt": "Sign the attached contract with my name, Jane Doe."
+              "description": "Writing a new document from scratch, which isn't document processing",
+              "prompt": "Write a short apartment rental agreement I can send to a new tenant."
             }
           ]
         },
