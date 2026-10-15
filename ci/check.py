@@ -106,6 +106,23 @@ for field in ("logo", "composerIcon"):
     size = struct.unpack(">II", data[16:24]) if data[:8] == b"\x89PNG\r\n\x1a\n" and data.endswith(b"IEND\xaeB`\x82") else None
     check(size is not None and size[0] == size[1] and size[0] >= 48,
           f".codex-plugin/plugin.json {field} is a complete square PNG of at least 48 pixels inside the plugin")
+# OpenAI's review metadata: exactly five positive and three negative cases for the initial MCP review, no credentials.
+openai = codex.get("extensions", {}).get("com.openai", {})
+review = openai.get("review", {})
+cases = review.get("test_cases", {})
+positive, negative = cases.get("positive", []), cases.get("negative", [])
+check(len(positive) == 5 and all(all(isinstance(case.get(field), str) and case[field].strip() for field in ("description", "prompt", "tools_triggered", "expected_behavior"))
+                                 for case in positive),
+      ".codex-plugin/plugin.json has five positive review cases with description, prompt, tools_triggered and expected_behavior")
+check(len(negative) == 3 and all(all(isinstance(case.get(field), str) and case[field].strip() for field in ("description", "prompt")) for case in negative),
+      ".codex-plugin/plugin.json has three negative review cases with description and prompt")
+check(all(isinstance(url, str) and url.startswith("https://") for case in positive for url in case.get("file_attachment_urls", [])),
+      ".codex-plugin/plugin.json review cases attach files by https URL")
+check(isinstance(review.get("commerce"), bool), ".codex-plugin/plugin.json declares review.commerce")
+check(isinstance(openai.get("publication", {}).get("release_notes"), str), ".codex-plugin/plugin.json has publication.release_notes")
+check(not {"test_credentials", "reviewer_instructions"} & set(review), "reviewer credentials stay out of the package")
+check("demo_recording_url" not in review or str(review["demo_recording_url"]).startswith("https://"),
+      ".codex-plugin/plugin.json review.demo_recording_url is an https URL")
 openai_marketplace = load(ROOT / ".agents" / "plugins" / "marketplace.json")
 openai_entries = [entry for entry in openai_marketplace.get("plugins", []) if entry.get("name") == codex.get("name")]
 check(len(openai_entries) == 1 and (ROOT / openai_entries[0].get("source", {}).get("path", "")).resolve() == PLUGIN,
@@ -124,6 +141,10 @@ tools = load(ROOT / "ci" / "tools.json")
 chatgpt_catalog = ROOT / "ci" / "tools-chatgpt.json"
 chatgpt_tools = load(chatgpt_catalog) if chatgpt_catalog.exists() else []
 known = {tool["name"] for tool in tools + chatgpt_tools}
+listed = {tool["name"] for tool in chatgpt_tools or tools}
+triggered = [name.strip() for case in positive for name in case.get("tools_triggered", "").split(",")]
+check(all(name in listed for name in triggered),
+      f"review cases trigger only tools ChatGPT is listed; unknown: {', '.join(sorted(set(triggered) - listed))}")
 collect(tools + chatgpt_tools, known)
 for skill_file in skills:
     skill = skill_file.read_text().replace("\r\n", "\n")

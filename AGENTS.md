@@ -37,15 +37,15 @@ The snapshot should match the service that is live in production, since the plug
 
 ## Submitting to OpenAI
 
-Build the ZIP from the plugin folder without Claude's manifest, so OpenAI reads only `.codex-plugin/plugin.json`:
-
-```sh
-cd plugins/nutrient && zip -r -X ../../nutrient-openai.zip . -x '.claude-plugin/*' -x '.DS_Store'
-```
+Build the ZIP with `python3 ci/package_openai.py`. It runs `ci/check.py`, then writes
+`dist/nutrient-openai-<version>.zip` from the plugin folder without Claude's manifest, so OpenAI reads only
+`.codex-plugin/plugin.json`, and prints its files and SHA-256. The same commit always produces the same bytes.
 
 Upload it in OpenAI's developer dashboard from a project with global data residency; an organization owner or a member
-with Apps Management Write submits, after the organization's identity is verified. Review needs five positive and three
-negative test cases, a demo video and release notes: they can go in the dashboard or in `.codex-plugin/plugin.json`
-under `extensions.com.openai.review` and `publication`. Reviewer credentials go only in the dashboard; the ZIP rejects
-them. OpenAI also verifies the domain: the dashboard issues a challenge token that must be served as plain text at
+with Apps Management Write submits, after the organization's identity is verified. The review metadata lives in
+`.codex-plugin/plugin.json` under `extensions.com.openai`: five positive and three negative test cases, `commerce`, the
+release notes and, once recorded, `demo_recording_url`. `ci/check.py` enforces the case counts and fields, and that each
+case triggers a tool ChatGPT is listed. Imported cases are read-only in the dashboard, so change them here and upload a
+new ZIP. Run every positive case with the reviewer account before submitting. Reviewer credentials go only in the
+dashboard's Review details; the ZIP rejects them. OpenAI also verifies the domain: the dashboard issues a challenge token that must be served as plain text at
 `https://mcp.nutrient.io/.well-known/openai-apps-challenge` (or on an eligible parent domain) before review.

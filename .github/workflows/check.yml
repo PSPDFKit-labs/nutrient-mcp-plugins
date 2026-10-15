@@ -15,3 +15,5 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Check the plugin against the service's tools
         run: python3 ci/check.py
+      - name: Build the OpenAI package
+        run: python3 ci/package_openai.py

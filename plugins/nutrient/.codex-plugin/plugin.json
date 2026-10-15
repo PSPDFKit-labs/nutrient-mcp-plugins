@@ -41,5 +41,67 @@
     "brandColor": "#1A1414",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png"
+  },
+  "extensions": {
+    "com.openai": {
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Extract invoice fields from a PDF link",
+              "prompt": "Extract the invoice number, invoice date and total from https://raw.githubusercontent.com/PSPDFKit/pspdfkit-maui-catalog/main/Resources/Raw/Assets/invoice.pdf",
+              "tools_triggered": "extract_fields",
+              "expected_behavior": "Nutrient extracts the invoice number 19431-781, the date March 12, 2024 and the total 2,720 € from page 1, each with a citation. The Nutrient panel lists the values, and Review shows the page with each value highlighted."
+            },
+            {
+              "description": "Convert an attached PDF to Markdown",
+              "prompt": "Convert the attached menu to Markdown with Nutrient.",
+              "tools_triggered": "parse_document",
+              "expected_behavior": "Nutrient parses the attached PDF and returns its text as Markdown, keeping the menu's sections, dishes and prices in reading order. The Nutrient panel shows the result.",
+              "file_attachment_urls": [
+                "https://raw.githubusercontent.com/PSPDFKit/pspdfkit-maui-catalog/main/Resources/Raw/Assets/menu.pdf"
+              ]
+            },
+            {
+              "description": "Classify a document",
+              "prompt": "With Nutrient, is https://raw.githubusercontent.com/PSPDFKit/pspdfkit-maui-catalog/main/Resources/Raw/Assets/default.pdf a contract, an invoice or a form?",
+              "tools_triggered": "classify_document",
+              "expected_behavior": "Nutrient labels the document a contract with a confidence score, and the answer names that label."
+            },
+            {
+              "description": "Draft an extraction schema without processing a document",
+              "prompt": "With Nutrient, draft an extraction schema for purchase orders: order number, order date, supplier, and line items with quantity and unit price. Don't run it on a document yet.",
+              "tools_triggered": "generate_schema",
+              "expected_behavior": "Nutrient returns a JSON schema with the requested fields and an array of line items. No document is processed."
+            },
+            {
+              "description": "Check remaining credits",
+              "prompt": "How many Nutrient Data Extraction credits do I have left?",
+              "tools_triggered": "get_account_usage",
+              "expected_behavior": "Nutrient reports the Data Extraction credits used and remaining in the signed-in account's current billing period."
+            }
+          ],
+          "negative": [
+            {
+              "description": "A general question with no document, which Nutrient isn't needed for",
+              "prompt": "Suggest three names for a coffee shop."
+            },
+            {
+              "description": "Deleting account data, which Nutrient's tools can't do",
+              "prompt": "Delete every document stored in my Nutrient account."
+            },
+            {
+              "description": "Signing a document, which Nutrient doesn't offer in ChatGPT",
+              "prompt": "Sign the attached contract with my name, Jane Doe."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "Nutrient sells nothing in ChatGPT. Runs use the credits of the user's existing Nutrient DWS account."
+      },
+      "publication": {
+        "release_notes": "First release: parse PDFs, Office documents and images into Markdown with layout, extract fields with citations, and classify documents with your Nutrient DWS account, then review each value on its page in the Nutrient panel."
+      }
+    }
   }
 }
