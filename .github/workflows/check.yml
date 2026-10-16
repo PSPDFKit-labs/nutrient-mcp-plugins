@@ -17,3 +17,5 @@ jobs:
         run: python3 ci/check.py
       - name: Build the OpenAI package
         run: python3 ci/package_openai.py
+      - name: Check packaging boundaries and reproducibility
+        run: python3 -m unittest discover -s ci -p 'test_*.py'

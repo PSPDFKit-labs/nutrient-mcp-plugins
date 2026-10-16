@@ -60,6 +60,19 @@ def collect(node, names):
             collect(item, names)
 
 
+def credential_fields(node):
+    """Reject credential containers even when nested in an otherwise supported extension."""
+    forbidden = {"clientsecret", "accesstoken", "refreshtoken", "apikey", "password", "testcredentials", "reviewerinstructions"}
+    if isinstance(node, dict):
+        for key, value in node.items():
+            check(re.sub(r"[_-]", "", key).lower() not in forbidden,
+                  f"credential field {key} stays outside the public package")
+            credential_fields(value)
+    elif isinstance(node, list):
+        for value in node:
+            credential_fields(value)
+
+
 marketplace = load(ROOT / ".claude-plugin" / "marketplace.json")
 manifest = load(PLUGIN / ".claude-plugin" / "plugin.json")
 entries = [entry for entry in marketplace.get("plugins", []) if entry.get("name") == manifest.get("name")]
@@ -80,6 +93,7 @@ for folder in (ROOT, PLUGIN):
 
 # OpenAI (ChatGPT and Codex): .codex-plugin/plugin.json shares .mcp.json and skills/ with Claude's manifest.
 codex = load(PLUGIN / ".codex-plugin" / "plugin.json")
+credential_fields(codex)
 check(codex.get("name") == manifest.get("name") and codex.get("version") == manifest.get("version"),
       ".codex-plugin/plugin.json has the same name and version as .claude-plugin/plugin.json")
 check(codex.get("mcpServers") == "./.mcp.json" and codex.get("skills") == "./skills/",
@@ -104,10 +118,12 @@ for field in ("logo", "composerIcon"):
     data = image.read_bytes() if image.is_relative_to(PLUGIN) and image.is_file() else b""
     # A complete PNG: signature, then IHDR's width and height, ending with the IEND chunk.
     size = struct.unpack(">II", data[16:24]) if data[:8] == b"\x89PNG\r\n\x1a\n" and data.endswith(b"IEND\xaeB`\x82") else None
-    check(size is not None and size[0] == size[1] and size[0] >= 48,
-          f".codex-plugin/plugin.json {field} is a complete square PNG of at least 48 pixels inside the plugin")
+    check(size is not None and size[0] == size[1] and 48 <= size[0] <= 4096 and len(data) <= 5 * 1024 * 1024,
+          f".codex-plugin/plugin.json {field} is a complete square PNG, 48–4096 pixels and at most 5 MiB, inside the plugin")
 # OpenAI's review metadata: exactly five positive and three negative cases for the initial MCP review, no credentials.
 openai = codex.get("extensions", {}).get("com.openai", {})
+check(set(openai) <= {"review", "publication"},
+      ".codex-plugin/plugin.json OpenAI extension has only reviewed fields (no local apps or hooks)")
 review = openai.get("review", {})
 cases = review.get("test_cases", {})
 positive, negative = cases.get("positive", []), cases.get("negative", [])
@@ -130,9 +146,19 @@ check(len(openai_entries) == 1 and (ROOT / openai_entries[0].get("source", {}).g
 check(len(openai_entries) == 1 and openai_entries[0].get("policy", {}).get("installation") in ("AVAILABLE", "INSTALLED_BY_DEFAULT", "NOT_AVAILABLE"),
       ".agents/plugins/marketplace.json gives the plugin a valid installation policy")
 
-servers = load(PLUGIN / ".mcp.json").get("mcpServers", {})
-check(list(servers) == ["nutrient"] and servers["nutrient"].get("type") == "http" and servers["nutrient"].get("url") == SERVICE,
+mcp = load(PLUGIN / ".mcp.json")
+check(mcp == {"mcpServers": {"nutrient": {"type": "http", "url": SERVICE}}},
       f".mcp.json declares one server, nutrient, at {SERVICE} over HTTP (OpenAI connects one server per plugin)")
+# The production connection uses OAuth discovery. No fixed headers, embedded credentials, local app mappings,
+# or registration overrides belong in this package. Changes to authentication need an explicit review here.
+check(set(codex) <= {"name", "version", "description", "author", "homepage", "repository", "license", "keywords",
+                     "skills", "mcpServers", "interface", "extensions"},
+      ".codex-plugin/plugin.json has only the reviewed package fields (no local apps or hooks)")
+for catalog in ("tools.json", "tools-chatgpt.json"):
+    for tool in load(ROOT / "ci" / catalog):
+        annotations = tool.get("annotations", {})
+        check(all(type(annotations.get(hint)) is bool for hint in ("readOnlyHint", "destructiveHint", "openWorldHint")),
+              f"{catalog} {tool['name']} has explicit boolean tool annotations")
 
 skills = sorted((PLUGIN / "skills").glob("*/SKILL.md"))
 check(len(skills) > 0, "the plugin has at least one skill")

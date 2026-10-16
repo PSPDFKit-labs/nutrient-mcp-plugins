@@ -18,7 +18,8 @@ mention Nutrient, say that the file goes to their Nutrient account as you send i
 | Classify documents or sort them into categories | `classify_document`, with at least two `instructions.labels` |
 
 For a file as the result, such as a searchable PDF, a conversion, a redaction or a signature, use `process_document`,
-`redact_document` or `sign_document`.
+`redact_document` or `sign_document` only when the host lists that tool. If it doesn't, explain that this operation
+isn't available through Nutrient in this host; don't attempt an unlisted tool.
 
 Each run uses the user's Nutrient DWS credits. For a summary of a document or a free-form question about it, read it
 yourself unless the user asks for one of the operations above; parse a scan or image you can't read. Before running more
@@ -29,16 +30,16 @@ than three files, tell the user how many runs you will start.
 1. If the processing tool takes `chat_file` and the user attached the file to the chat, pass it there: the app fills in
    its `download_url`, and Nutrient fetches the file from it. Never type those values yourself. If the app didn't fill
    it in, continue with the next step.
-2. Otherwise, for a file attached to the chat or on disk, call `upload_documents` with its `filename`, `content_type` and
+2. Otherwise, if the host lists `upload_documents`, for a file attached to the chat or on disk, call it with its `filename`, `content_type` and
    `path`, run the command it returns exactly as returned, and pass the printed `asset_id` to the processing tool. The
    command expires within five minutes; if it has, call `upload_documents` again. Reuse an `asset_id` for further
    operations on the same file; it expires after 24 hours.
-3. If that command can't run where the file is, or fails with HTTP 403 "Host not in allowlist", don't retry it. When the
+3. If the host doesn't list `upload_documents`, that command can't run where the file is, or it fails with HTTP 403
+   "Host not in allowlist", don't retry it. When the
    processing tool offers `attached_file`, call it once per file with the file's `filename` and `content_type` instead of
    `asset_id`: the Nutrient panel asks the user for the file and runs the call. Tell the user to add the file in the
-   panel, and don't call again. Otherwise ask the user to allow `mcp.nutrient.io` in the app's network settings (in
-   Claude: Settings, Capabilities, Additional allowed domains), or to share the document as an HTTPS link, which
-   `document.url` takes.
+   panel, and don't call again. Otherwise ask the user to share the document as an HTTPS link, which `document.url`
+   takes. In Claude, they can also allow `mcp.nutrient.io` under Settings, Capabilities, Additional allowed domains.
 4. Never paste a document as base64 to get around an upload problem.
 
 ## Read the results

@@ -22,6 +22,10 @@ OpenAI's directory takes a ZIP of `plugins/nutrient`, uploaded for each release.
 
 Never change `name` in `plugin.json`: it is the plugin's permanent identity.
 
+For packaging changes, also run `python3 -m unittest discover -s ci -p 'test_*.py'`. The ZIP uses an explicit file list
+in `ci/package_openai.py`; add new referenced resources there deliberately. Never add reviewer access or local app mappings.
+See [the submission handoff](docs/openai-submission.md) for checks that still require the owner and a live ChatGPT run.
+
 ## Refreshing the tool snapshot
 
 `ci/tools.json` and `ci/tools-chatgpt.json` are the catalogs Hosted MCP (`hosted-mcp/` in the private Nutrient monorepo)

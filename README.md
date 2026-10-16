@@ -27,6 +27,12 @@ On Team and Enterprise plans, an Owner can roll the plugin out to the whole orga
 - [`ci/check.py`](ci/check.py): checks the plugin against [`ci/tools.json`](ci/tools.json), a snapshot of the service's
   tools; see [AGENTS.md](AGENTS.md) for changing the skill and refreshing the snapshot
 
+## OpenAI submission
+
+The existing submission package is built with `python3 ci/package_openai.py`. See the
+[submission handoff](docs/openai-submission.md) for validation, review cases and remaining owner steps. A passing local
+build is not a completed directory review.
+
 ## License
 
 [MIT](LICENSE)
