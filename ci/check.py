@@ -133,6 +133,9 @@ check(len(openai_entries) == 1 and openai_entries[0].get("policy", {}).get("inst
 servers = load(PLUGIN / ".mcp.json").get("mcpServers", {})
 check(list(servers) == ["nutrient"] and servers["nutrient"].get("type") == "http" and servers["nutrient"].get("url") == SERVICE,
       f".mcp.json declares one server, nutrient, at {SERVICE} over HTTP (OpenAI connects one server per plugin)")
+# Without scopes, Codex asks for every scope the authorization server lists, and the service can't use that grant.
+check(servers.get("nutrient", {}).get("scopes") == ["mcp:invoke", "offline_access"],
+      ".mcp.json requests the service's own scopes, mcp:invoke and offline_access")
 
 skills = sorted((PLUGIN / "skills").glob("*/SKILL.md"))
 check(len(skills) > 0, "the plugin has at least one skill")
