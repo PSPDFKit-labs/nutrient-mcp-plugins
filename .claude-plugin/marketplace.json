@@ -9,7 +9,7 @@
       "name": "nutrient",
       "source": "./plugins/nutrient",
       "description": "Parse, extract from and classify documents with Nutrient DWS: OCR for scans, Markdown with layout, structured fields with citations, and labels, as stored runs in your Nutrient account.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": { "name": "Nutrient", "url": "https://www.nutrient.io" },
       "homepage": "https://www.nutrient.io/api/",
       "license": "MIT"

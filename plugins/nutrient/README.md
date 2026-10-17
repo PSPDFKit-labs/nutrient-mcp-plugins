@@ -7,9 +7,12 @@ file is attached to the chat.
 
 ## Use it
 
-1. Add the plugin, then connect the Nutrient connector and sign in with your Nutrient account. In Claude Code, install it
-   with `/plugin install nutrient --marketplace PSPDFKit-labs/nutrient-mcp-plugins`; in Codex, with
-   `codex plugin marketplace add PSPDFKit-labs/nutrient-mcp-plugins` and `codex plugin add nutrient@nutrient`.
+1. Add the plugin, then connect the Nutrient connector and sign in with your Nutrient account. The tools appear once
+   you're signed in.
+   - In Claude Code, install it with `/plugin install nutrient --marketplace PSPDFKit-labs/nutrient-mcp-plugins`, then
+     run `/mcp`, choose `plugin:nutrient:nutrient` and sign in.
+   - In Codex, install it with `codex plugin marketplace add PSPDFKit-labs/nutrient-mcp-plugins` and
+     `codex plugin add nutrient@nutrient`, sign in with `codex mcp login nutrient`, then start a new session.
 2. Attach a PDF, Office document or image, point to a file on disk or an HTTPS link, and ask to parse it, convert it to
    Markdown, extract fields or tables, or classify it.
 3. The assistant sends the file to your Nutrient account and returns the result: Markdown with layout, structured fields

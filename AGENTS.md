@@ -22,6 +22,10 @@ OpenAI's directory takes a ZIP of `plugins/nutrient`, uploaded for each release.
 
 Never change `name` in `plugin.json`: it is the plugin's permanent identity.
 
+Keep `scopes` in `.mcp.json`. Without it, Codex asks for every scope the authorization server lists instead of the
+service's own, and the service can't exchange that grant, so every tool call fails. Claude Code asks for the same pair,
+taken from the service's sign-in challenge, and ChatGPT for the scopes the service advertises. `ci/check.py` checks it.
+
 ## Refreshing the tool snapshot
 
 `ci/tools.json` and `ci/tools-chatgpt.json` are the catalogs Hosted MCP (`hosted-mcp/` in the private Nutrient monorepo)
