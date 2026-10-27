@@ -1,9 +1,12 @@
 # Nutrient
 
-Parse, extract from and classify documents with [Nutrient DWS](https://www.nutrient.io/api/) from a conversation with
-Claude, ChatGPT or Codex. The plugin bundles the Nutrient connector with a skill that tells the assistant when to use it,
-so a request such as "Parse this document" or "Extract the invoice number and total" runs through Nutrient even when the
-file is attached to the chat.
+Extract data from PDFs, Office documents, images and scans with your Nutrient account
+([Nutrient DWS](https://www.nutrient.io/api/), Nutrient's document API). Nutrient shows where on the page it found the
+values, and it warns you about values to check. You can also convert documents to Markdown and classify them. With files
+on your computer, as in Claude Code and Codex, you can also make searchable PDFs, convert files (for example, Word to
+PDF), redact them and add your organization's digital signature. The plugin bundles the Nutrient connector with a skill
+that tells Claude, ChatGPT or Codex when to use it, so a request such as "Extract the invoice number and total" runs
+through Nutrient even when the file is attached to the chat.
 
 ## Use it
 

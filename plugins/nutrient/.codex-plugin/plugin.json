@@ -1,7 +1,7 @@
 {
   "name": "nutrient",
-  "version": "1.0.1",
-  "description": "Parse, extract from and classify documents with Nutrient DWS: OCR for scans, Markdown with layout, structured fields with citations, and labels, as stored runs in your Nutrient account.",
+  "version": "1.0.2",
+  "description": "Extract data from PDFs, Office files, images and scans, with page citations and warnings for values to check. Also convert documents to Markdown and classify them. Uses your Nutrient account.",
   "author": {
     "name": "Nutrient",
     "url": "https://www.nutrient.io"
@@ -21,8 +21,8 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Nutrient",
-    "shortDescription": "Parse and extract documents",
-    "longDescription": "For people and teams who work with documents in ChatGPT or Codex: turn PDFs, Office documents and images into Markdown with layout, extract structured fields with citations for the values it finds, and classify documents with Nutrient DWS. Requires a Nutrient DWS account with credits: each run uses credits and is stored in your account. In ChatGPT, Nutrient takes files attached to the chat or HTTPS links; signing, redaction and other Processor operations need files on your computer, as in Codex. Uploaded files are kept for 24 hours.",
+    "shortDescription": "Extract data from documents",
+    "longDescription": "Nutrient extracts data from your documents. It shows where on the page it found the values, and it warns you about values to check. It works with PDFs, Office documents, images and scanned pages, such as invoices, receipts, bank statements, contracts and forms.\n\nWhat you can do:\n- Extract data. Ask for the values you need in plain words, for example an invoice number, a date, a total or the line items. When Nutrient finds a value on the page, it adds a citation to that place. Values without a citation, or with low confidence, get a warning, so you know what to check.\n- Check the values. In the ChatGPT and Codex apps, select Review in the Nutrient panel to see the values highlighted on their pages.\n- Get the same fields from many files. Nutrient makes an extraction schema (a list of fields) from one sample file. Use it for similar files, and each file returns the same fields.\n- Convert documents to Markdown. Headings, tables and reading order stay in place. Scanned pages are read with OCR.\n- Classify documents into two or more categories that you name, with a confidence score for each.\n- See how many credits are left in your Nutrient account.\n\nIn Codex, Nutrient can also work with files on your computer: make searchable PDFs, convert files (for example, Word to PDF), merge them, redact information such as personal data, and add your organization's digital signature to PDFs. Codex saves the new files for you.\n\nWho it's for: people who take data from documents and need to check it, for example in finance, operations or legal work, and developers who want to try the Nutrient API on their own documents. Each run is saved in your Nutrient account, so you can open it again later.\n\nGood to know:\n- You need a Nutrient account. Each run uses credits from your account.\n- In ChatGPT, Nutrient takes files that you attach to the chat, or HTTPS links. Searchable PDFs, file conversion, merging, redaction and signing are available only in Codex.\n- For a summary of a document or a question about it, ChatGPT and Codex read the document themselves. When you ask to extract, convert or classify, they send the file to Nutrient and tell you. To keep a file out of Nutrient, ask them to read it themselves.\n- Your documents go only to your Nutrient account. Uploaded files are kept for 24 hours, and runs for your plan's retention period. If you open Review, a copy of the document stays in your Nutrient account until you delete it.",
     "developerName": "Nutrient",
     "category": "Productivity",
     "capabilities": [
@@ -35,8 +35,9 @@
     "termsOfServiceURL": "https://www.nutrient.io/legal/terms/",
     "supportURL": "https://www.nutrient.io/company/contact/",
     "defaultPrompt": [
-      "Parse the attached PDF into Markdown with Nutrient",
-      "Extract the invoice number, seller and total from this invoice with Nutrient"
+      "With Nutrient, extract the key details from this document into a table and flag any value I should check",
+      "With Nutrient, convert this PDF to Markdown and keep its headings and tables",
+      "With Nutrient, ask me which fields I need, then extract them from each of these files into one table"
     ],
     "brandColor": "#1A1414",
     "composerIcon": "./assets/logo.png",
@@ -51,7 +52,7 @@
               "description": "Extract invoice fields from a PDF link",
               "prompt": "Extract the invoice number, invoice date and total from https://raw.githubusercontent.com/PSPDFKit/pspdfkit-maui-catalog/main/Resources/Raw/Assets/invoice.pdf",
               "tools_triggered": "extract_fields",
-              "expected_behavior": "Nutrient extracts the invoice number 19431-781, the date March 12, 2024 and the total 2,720 € from page 1, each with a citation. The Nutrient panel lists the values, and Review shows the page with each value highlighted."
+              "expected_behavior": "Nutrient extracts the invoice number 19431-781, the date March 12, 2024 and the total 2,720 € from page 1. Values that Nutrient finds on the page have a citation, and a value without one shows Nutrient's review warning. The Nutrient panel lists the values, and Review shows the cited values highlighted on the page."
             },
             {
               "description": "Convert an attached PDF to Markdown",
@@ -100,7 +101,7 @@
         "commerce_description": "Nutrient sells nothing in ChatGPT. Runs use the credits of the user's existing Nutrient DWS account."
       },
       "publication": {
-        "release_notes": "First release: parse PDFs, Office documents and images into Markdown with layout, extract fields with citations, and classify documents with your Nutrient DWS account, then review each value on its page in the Nutrient panel."
+        "release_notes": "First release: extract data from documents with page citations and warnings for values to check, review the values in the Nutrient panel, convert documents to Markdown and classify them, with your Nutrient account."
       }
     }
   }

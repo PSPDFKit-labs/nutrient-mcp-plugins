@@ -2,14 +2,14 @@
   "name": "nutrient",
   "owner": { "name": "Nutrient", "url": "https://www.nutrient.io" },
   "metadata": {
-    "description": "Nutrient plugin for Claude: parse, extract from and classify documents with Nutrient DWS."
+    "description": "Nutrient plugin for Claude: extract data from documents, convert them to Markdown and classify them."
   },
   "plugins": [
     {
       "name": "nutrient",
       "source": "./plugins/nutrient",
-      "description": "Parse, extract from and classify documents with Nutrient DWS: OCR for scans, Markdown with layout, structured fields with citations, and labels, as stored runs in your Nutrient account.",
-      "version": "1.0.1",
+      "description": "Extract data from PDFs, Office files, images and scans, with page citations and warnings for values to check. Also convert documents to Markdown and classify them. Uses your Nutrient account.",
+      "version": "1.0.2",
       "author": { "name": "Nutrient", "url": "https://www.nutrient.io" },
       "homepage": "https://www.nutrient.io/api/",
       "license": "MIT"
